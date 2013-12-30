@@ -4,7 +4,7 @@
 composer.phar
 .DS_Store
 Thumbs.db
-
+composer.lock
 # Passwords file
 /app/config/packages/flatturtle/sitecore/passwords.php
 

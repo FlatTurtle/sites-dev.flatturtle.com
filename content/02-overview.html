@@ -1,0 +1,260 @@
+<h1>Overview</h1>
+<p>To be inserted: screen in the middle, projects around it, clickable images.</p>
+
+<!--<h2>1. Setting up the MyTurtle basics</h2>
+<h3>MyTurtle</h3>
+<p>Download the <a href="https://github.com/FlatTurtle/MyTurtle">MyTurtle software</a>. This is mere Javascript, HTML5 and CSS3. You will need a modern browser to be able to run it.</p>
+<p>This contains all the software needed to run your own display with a couple of predefined types of information streams: Belgian railways, buses, twitter, RSS feeds, signage, traffic, and so on.</p>
+<img height="280" src="images/image03.jpg" width="498">
+<h3>DISCS 1.0</h3>
+<p>When you will open your browser which shows the software, there will be a standard demo screen configured. This is because we have configured the standard version to look for a standard configuration on the FlatTurtle servers (a RESTful API). This configuration is a JSON file in which everything can be configured, from cronjobs to where to fetch the content in the turtles, to the color to be configured.</p>
+<p>In client/template.php you can easily change the URL to the JSON file to your own <a href="https://docs.google.com/document/d/1s2vdD5QKOE3Vj12zXWWbbixAPTmgQKUsLkqDwCi0BYU/edit">DISCS 1.0</a> file. DISCS stands for Digital Info Screen Configuration Specification.</p>
+<img height="319" src="images/image05.png" width="499">
+<h2>
+  <a name="h.16ki88nq856y">
+  </a>
+  2. Write your own turtle and pane
+</h2>
+<h3 class="c12 c1">
+  <a name="h.nee7nj459nwq">
+  </a>
+  Turning the data into information
+</h3>
+<p>
+  In the back of these turtles written in JavaScript, there is an API which serves the data. For datasets that update each minute (such as the Belgian railway information), we use a polling mechanism to a 
+  <span class="c6">
+    <a class="c3" href="http://thedatatank.com">The DataTank</a>
+  </span>
+  &nbsp;instance. The DataTank is a framework written in PHP which allows people to have a webservice set-up in no-time. This eliminates the need for any server side code. The only thing you need to know to get content on your screen is client side browser code (HTML, CSS, JavaScript).
+</p>
+<h3>
+  <a name="h.esb1hbwrdcma">
+  </a>
+  Check an example
+</h3>
+<p>
+  On 
+  <span class="c6">
+    <a class="c3" href="https://github.com/FlatTurtle/MyTurtle/tree/master/turtles">github, in the Turtles folder</a>
+  </span>
+  , we have a lot of good examples of turtles which can work with your display. If you want to write your own turtle, just copy a folder and start tweaking. If you get the drill, you can start writing a Turtle from scratch.
+</p>
+<p>
+  There is also a skeleton folder with an empty Turtle in it.
+</p>
+<h2>
+  <a name="h.mswol3bq887s">
+  </a>
+  3. Managed display with real-time interaction
+</h2>
+<h3>
+  <a name="h.gzpl23lvwn4g">
+  </a>
+  Installing the custom browser
+</h3>
+<p>
+  The 
+  <span class="c6">
+    <a class="c3" href="https://github.com/FlatTurtle/InfoScreenBrowser">custom browser</a>
+  </span>
+  &nbsp;adds some functionalities over a normal browser, and removes all unnecessary features such as an address bar, bookmarks and so on.
+</p>
+<p>
+  It&rsquo;s written in Qt and uses a config file which is put in your home directory. 
+</p>
+<h3>
+  <a name="h.fbfokfibg5b6">
+  </a>
+  The application object
+</h3>
+<p>
+  The application DOM object, only available in a webpage opened by the custom infoscreenbrowser, allows you to control the system through javascript. This enables you, for instance, to reboot, force Puppet updates, turn your screen off (using xset dpms force off) and 
+  <span class="c6">
+    <a class="c3" href="http://mpd.wikia.com/wiki/Music_Player_Daemon_Wiki">mpd</a>
+  </span>
+  &nbsp;sound control (in the event of using it as a music player as well).
+</p>
+<p class="c2 c1">
+  <span>
+  </span>
+</p>
+<p>
+  Usage:
+</p>
+<ul class="c10 lst-kix_smyybzkwx4z9-0 start">
+  <li>
+    application.enableScreen(BOOL); 
+  </li>
+  <li>
+    application.puppetUpdate();
+  </li>
+  <li>
+    application.soundControl(&ldquo;play&rdquo;); // and other 
+    <span class="c6">
+      <a class="c3" href="http://linux.die.net/man/1/mpc">mpc commands</a>
+    </span>
+  </li>
+</ul>
+<h3>
+  <a name="h.kp7ixbr0exzz">
+  </a>
+  Jobstab
+</h3>
+<p>
+  <span class="c6">
+    <a class="c3" href="https://docs.google.com/document/d/1s2vdD5QKOE3Vj12zXWWbbixAPTmgQKUsLkqDwCi0BYU/edit">DISCS</a>
+  </span>
+  &nbsp;also allows for installing jobs. Jobs in your MyTurtle are cronjobs in javascript. Javascript lines can be executed when a certain condition is met (each 5 minutes, every evening at 8, and so on). Most commonly used is to turn off the display in the evening, and turning it back on in the morning.
+</p>
+<h3>
+  <a name="h.p21htr64r4uf">
+  </a>
+  Real-time interaction with pubsub
+</h3>
+<p>
+  The browser is also an XMPP client. When you talk using the administrator account to a display, the text will be injected in the script. This means we can interact using push messages with any display connected to our XMPP server, and change the DOM of the page.
+</p>
+<p class="">
+  Using your favourite chat client (pidgin in the screenshot below), you can inject javascript at will.
+</p>
+<p class="c2">
+  <span>
+  </span>
+</p>
+<p class="">
+  <img height="339" src="images/image01.png" width="615">
+</p>
+<p class="c2">
+  <span>
+  </span>
+</p>
+<p>
+  Through this method it is possible to create a publisher/subscriber (Pub/Sub) channel for for instance Twitter updates. When a push message is received from the twitter API, an XMPP message can be generated which contains the right javascript action code for a certain Turtle. Because of this, users can feel like they are connected to the screen. Think for instance about the possibilities with real-time Foursquare check-ins, nearby Instagram images, Facebook updates and so on.
+</p>
+<h2>
+  <a name="h.wp8zjgfdix84">
+  </a>
+  4. Control it to the fullest
+</h2>
+<h3>
+  <a name="h.irm1jmj24fa5">
+  </a>
+  An admin panel for your screen coordinators
+</h3>
+<p>
+  Another project is 
+  <span class="c6">
+    <a class="c3" href="https://github.com/FlatTurtle/MyTurtleAdmin">MyTurtleAdmin</a>
+  </span>
+  . It gives your customers full control over their infoscreens. It runs on a LAMP stack (not necessarily on the same server as the infoscreen). It is just an interface upon a RESTful programming interface (next chapter). You can add/remove Turtles, configure Turtles, change the layout color, add a logo, and so forth.
+</p>
+<p class="">
+  <img height="643" src="images/image04.png" width="420">
+</p>
+<h3>
+  <a name="h.4zl6rh7rhnoi">
+  </a>
+  The RESTful programming interface
+</h3>
+<p>
+  Our RESTful interface is a service-oriented layer on top of the configuration database, and the real-time XMPP interface. Thus it is able to send messages with the admin xmpp account, and it is able to change the configuration of a MyTurtle.
+</p>
+<p class="c2 c1">
+  <span>
+  </span>
+</p>
+<p>
+  The documentation about the resources and authentication can be found in 
+  <span class="c6">
+    <a class="c3" href="https://docs.google.com/document/d/1xIAdTKhjjq7CxgdtVRRNs9Yy3YIxEShFNvX2Ts0lCIE/edit#heading=h.ifvg7ajzn0b8">another google document</a>
+  </span>
+  .
+</p>
+<p class="c2 c1">
+  <span>
+  </span>
+</p>
+<h3>
+  <a name="h.3zrnw5urovj9">
+  </a>
+  Set up your own XMPP server
+</h3>
+<p>
+  We are using 
+  <span class="c6">
+    <a class="c3" href="http://prosody.im/">Prosody</a>
+  </span>
+  &nbsp;in production
+  , but feel free to use any other xmpp server you would like.
+</p>
+<p class="c2 c1">
+  <span>
+  </span>
+</p>
+<p>
+  Don&rsquo;t forget to configure your own xmpp server in the configuration of the InfoScreen browser. (~/.infoscreenbrowser).
+</p>
+<h3>
+  <a name="h.4mpye3bpbx7n">
+  </a>
+  Set up your own The DataTank
+</h3>
+<p>
+  FlatTurtle is a spin-off of 
+  <span class="c6">
+    <a class="c3" href="http://hello.irail.be">iRail</a>
+  </span>
+  . iRail is at this moment the main provider of the API on public transport. The API can be found at 
+  <span class="c6">
+    <a class="c3" href="http://data.irail.be">http://data.iRail.be</a>
+  </span>
+  .
+</p>
+<p class="c2 c1">
+  <span>
+  </span>
+</p>
+<p>
+  The software behind this data adapter is 
+  <span class="c6">
+    <a class="c3" href="http://thedatatank.com">The DataTank</a>
+  </span>
+  , another project by iRail. You can find documentation on how to write your own API on their website.
+</p>
+<h3>
+  <a name="h.7laob8sw0upz">
+  </a>
+  Cross cutting concerns
+</h3>
+<h4>
+  <a name="h.u53jx4sxpxhy">
+  </a>
+  Security
+</h4>
+<p>
+  All XMPP clients and servers are kept within a VPN using 
+  <span class="c6">
+    <a class="c3" href="http://openvpn.net/">OpenVPN</a>
+  </span>
+  .
+</p>
+<p>
+  For all FlatTurtle sites https is used for full encryption on application level.
+</p>
+<h4>
+  <a name="h.uqzk3naxphpp">
+  </a>
+  Caching
+</h4>
+<p>
+  In our set-up we use 
+  <span class="c6">
+    <a class="c3" href="https://www.varnish-cache.org/">Varnish</a>
+  </span>
+  &nbsp;and 
+  <span class="c6">
+    <a class="c3" href="http://memcached.org/">Memcached</a>
+  </span>
+  &nbsp;as caching mechanisms.
+</p>
+-->

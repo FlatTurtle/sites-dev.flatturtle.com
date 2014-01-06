@@ -224,7 +224,7 @@
 
             <div id="copyright">
                 <p>&copy; {{ date('Y') }} <a href="http://flatturtle.com" target="_blank">FlatTurtle</a></p>
-                <small>All software on https://github.com/FlatTurtle is AGPLv3 licensed. Attribute by linking back to https://flatturtle.com and publish your changes, favorably in a public git repository.</small>
+                <small>All software on https://github.com/FlatTurtle is AGPLv3 licensed.<br />Attribute by linking back to <a href="https://flatturtle.com/" target="_blank">FlatTurtle.com</a> and publishing your changes in a public git repository.</small>
             </div>
         </div>
     </section>

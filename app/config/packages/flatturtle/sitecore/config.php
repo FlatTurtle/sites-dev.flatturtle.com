@@ -32,6 +32,7 @@ return array(
 	*/
 
 	'directory' => 'content',
+	'logo' => 'images/flatturtle.png',
 
 
 	/*
